@@ -1,5 +1,5 @@
 ﻿/*global window:false,document:false*/
-//=====Version：2.4.0  131024=====
+//=====Version：2.4.0  131105=====
 
 var edu = edu || {};
 
@@ -318,7 +318,9 @@ edu.config.winLogin = edu.config.winLogin || {
     css: {
         error: "ui-state-error ui-widget-content"
     },
-    passportName: "passport"
+    passportName: "passport",
+    cookiePath: '/',
+    cookieExpires: 1
 };
 
 edu.config.winLogin.createWindow = function () {
