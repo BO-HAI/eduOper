@@ -1,11 +1,22 @@
 ﻿### eduOperJS
 自定义函数库，包括Api、Tools、EduUI、WinLogin
 
+【引用】
+```html
+<script type="text/javascript" src="http://static.edu24ol.com/js/Global/history/2.4.0/edu_config.js"></scrpit>
+<script type="text/javascript" src="http://static.edu24ol.com/js/Global/history/2.4.0/edu_oper.js"></scrpit>
+```
+【实例化】
+```javascript
+var api = new edu.command.Api(false);
+```
+具体参考API文档
+
 #### Version：2.4.0 131105
-[Date]：
+## [Date]：
 2013-08-15;
-[Contain]：
-edu.command.js:
+## [Contain]：
+##edu.command.js:
 1、JSHint: 修改不规范的Code
 2、Tools对象formatDate函数修改对特殊格式(带T)时间字符串的解析，放弃时间字符串毫秒部分，时区部分在config中定义
 3、Tools对象formatDate函数在第二个参数添加默认值，在漏传情况下不会引发异常（8-27）
@@ -17,11 +28,11 @@ edu.command.js:
 9、apiRequest-post、put方法禁止重发（2013-10-24）
 10、添加get post put del简单调用方法（2013-11-05）
 
-edu.ui.js：
+## edu.ui.js：
 1、修改Box对象在多个窗体存在的BUG，页面加载创建Box对象时会读取用户指定元素内容，并修改元素内容，但第二次创建对象时，指定元素内容没有恢复到初始内容，导致内容重复，样式混乱；
 2、修改jq语法错误（8-29）
 
-edu_deilog.js：
+## edu_deilog.js：
 1、新增全站统一登录窗体（2013-9-23）
 *  a、优化初始化绑定
 *  b、合并config文件
