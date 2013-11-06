@@ -1,6 +1,6 @@
 ﻿### eduOperJS
-自定义函数库，包括Api、Tools、UI
-### 更新
+自定义函数库，包括Api、Tools、EduUI、WinLogin
+
 #### Version：2.4.0 131105
 [Date]：
 2013-08-15;
