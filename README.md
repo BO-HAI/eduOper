@@ -6,8 +6,9 @@
 ```html
 <script  src="http://static.edu24ol.com/js/Global/history/2.4.0/edu_config.js"></script>
 <script  src="http://static.edu24ol.com/js/Global/history/2.4.0/edu_oper.js"></script>
+```
 
 ### API
-[Api对象](https://github.com/BO-HAI/eduOper/issues/2)
-[Tools对象](https://github.com/BO-HAI/eduOper/issues/3)
-[UserUI对象](https://github.com/BO-HAI/eduOper/issues/4)
+##### [Api对象](https://github.com/BO-HAI/eduOper/issues/2)
+##### [Tools对象](https://github.com/BO-HAI/eduOper/issues/3)
+##### [UserUI对象](https://github.com/BO-HAI/eduOper/issues/4)
