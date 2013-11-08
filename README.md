@@ -9,6 +9,7 @@
 ```
 
 ### API
-##### [Api对象](https://github.com/BO-HAI/eduOper/issues/2)
-##### [Tools对象](https://github.com/BO-HAI/eduOper/issues/3)
-##### [UserUI对象](https://github.com/BO-HAI/eduOper/issues/4)
+##### [Api对象：接口相关操作](https://github.com/BO-HAI/eduOper/issues/2)
+##### [Tools对象：工具](https://github.com/BO-HAI/eduOper/issues/3)
+##### [UserUI对象：用户界面](https://github.com/BO-HAI/eduOper/issues/4)
+##### [WinLogin对象：全站统一登陆窗体](https://github.com/BO-HAI/eduOper/issues/4)
