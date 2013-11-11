@@ -1,6 +1,5 @@
 ﻿/*global window:false,document:false*/
-//=====Version：2.4.0  131105=====
-
+//=====Version：2.4.0  131111=====
 var edu = edu || {};
 
 edu.config = {
@@ -197,7 +196,7 @@ edu.config = {
         //用户权限
         permission: {
             domain: "http://up.api.edu24ol.com",
-            testDomain: "http://userpermission.api.hq.com"
+            testDomain: "http://up.api.hq.com"
         },
         //公告
         notice: {
@@ -206,8 +205,8 @@ edu.config = {
         },
         //模考
         exam: {
-            domain: '',
-            testDomain: 'http://exammongodb.api.hq.com'
+            domain: "",
+            testDomain: "http://exammongodb.api.hq.com"
         }
     },
     oldTicket: "Passport",
@@ -319,7 +318,7 @@ edu.config.winLogin = edu.config.winLogin || {
         error: "ui-state-error ui-widget-content"
     },
     passportName: "passport",
-    cookiePath: '/',
+    cookiePath: "/",
     cookieExpires: 1
 };
 
@@ -533,66 +532,58 @@ edu.config.winLogin.createWindow = function () {
     }
 };
 
-
 edu.config.BuildUrl = function (api) {
-    if (arguments.length === 0 || (api instanceof edu.command.Api) === false) {
-        alert('edu.config.BulidUrl对象参数错误，未传递参数或参数类型不符（Type:edu.command.Api）。');
+    if (arguments.length === 0 && api instanceof edu.command.Api === false) {
+        alert("BuildUrl对象参数错误，未传递参数或参数类型错误");
         return null;
     }
-
     function createObj(name, p1, p2) {
         var o = {
             project: name,
-            path: ''
+            path: ""
         };
-
-        if (typeof p1 !== 'undefined') {
+        if (typeof p1 !== "undefined") {
             o.path = p1;
-        };
-
-        if (typeof p2 !== 'undefined') {
+        }
+        if (typeof p2 !== "undefined") {
             o.passport = p2;
-        };
+        }
         return o;
-    };
-
+    }
     //获取Api接口Url
     this.getApiUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('api', _path, _passport));
+        return api.createFullUrl(createObj("api", _path, _passport));
     };
-
     //获取Log接口Url
     this.getLogUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('log', _path, _passport));
+        return api.createFullUrl(createObj("log", _path, _passport));
     };
-
     //获取comm接口Url
     this.getCommUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('comm', _path, _passport));
+        return api.createFullUrl(createObj("comm", _path, _passport));
     };
-
     //获取sms接口Url
     this.getSmsUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('sms', _path, _passport));
+        return api.createFullUrl(createObj("sms", _path, _passport));
     };
-
     //获取product接口Url
     this.getProductUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('product', _path, _passport));
+        return api.createFullUrl(createObj("product", _path, _passport));
     };
-
     //获取用户权限接口URL
     this.getPermissionUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('permission', _path, _passport));
+        return api.createFullUrl(createObj("permission", _path, _passport));
     };
-
     //获取公告接口URL
     this.getNoticeUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('notice', _path, _passport));
+        return api.createFullUrl(createObj("notice", _path, _passport));
     };
-
     //获取模考接口URL
     this.getExamUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj('exam', _path, _passport));
+        return api.createFullUrl(createObj("exam", _path, _passport));
+    };
+    //用户权限
+    this.getUpUrl = function (_path, _passport) {
+        return api.createFullUrl(createObj("up", _path, _passport));
     };
 };
