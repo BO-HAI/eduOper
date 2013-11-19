@@ -1,8 +1,7 @@
 ﻿/*global document:false, clearTimeout:false, location:false, setTimeout:false, unescape:false, window:false*/
-//=====Version：2.4.0  131105=====
-//=====Version：2.3.1  131105=====
+//=====Version：2.4.0  131109=====
 //[Date]：
-//2013-08-15;
+//2013-08-15 -- 2013-10-30;
 //[Contain]：
 //edu.command.js:
 //1、JSHint: 修改不规范的Code
@@ -14,21 +13,18 @@
 //7、valiReturnData函数对比返回值状态时，会将用户传入状态格式化为字符串进行比较（2013-9-24）
 //8、修改apiRequest-post方法回调地址（2013-10-24）
 //9、apiRequest-post、put方法禁止重发（2013-10-24）
-//10、添加get post put del简单调用方法（2013-11-05）
-
+//10、Api对象添加get、post方法，属于apiRequest的简单调用；（2013-10-30）
 //edu.ui.js：
 //1、修改Box对象在多个窗体存在的BUG，页面加载创建Box对象时会读取用户指定元素内容，并修改元素内容，
 //但第二次创建对象时，指定元素内容没有恢复到初始内容，导致内容重复，样式混乱；
-//2、修改jq语法错误（8-29）
-
+//2、修改jq语法错误（2013-08-29）
 //edu_deilog.js：
-//1、新增全站统一登录窗体（2013-9-23）
+//1、新增全站统一登录窗体（2013-09-23）
 //*  a、优化初始化绑定
 //*  b、合并config文件
-//2、对窗体样式进行调整，多数采用行内样式，以避免CSS的冲突（2013-9-25）
+//2、对窗体样式进行调整，多数采用行内样式，以避免CSS的冲突（2013-09-25）
 //3、修改窗体宽度
 //4、压缩文件中不再包含config
-
 //config：
 //1、添加sms接口请求对象，apiRequest参数中直接传入 edu.config.sms即可（9-12）
 //2、添加project对象，保存各类项目的域名（9-12）
@@ -36,9 +32,6 @@
 //4、添加isDebug函数中域名为空字符串的判断（2013-9-25）
 //5、添加登陆窗体config信息
 //6、添加新项目域名（2013-10-24）
-//7、添加cookie参数，有效期和路径（2013-11-05）
-
-
 /**
 * 工具类
 * @class 职业网校JS使用工具
@@ -1013,7 +1006,7 @@ edu.ui.UserUI.prototype.load = function (elementId, color, shadow, opts) {
 
 /**
 * 空数据提示
-* @param {String} printInfo 请求地址
+* @param {String} printInfo 打印信息
 * @param {String} elementId 加载元素ID
 * @param {object} [{color: '#F60',fontSize: '14px',fontWeight:'bold'}]  [可选]字体参数对象
 * @author  <a href="mailto:bohai@gedu.org">bohai</a>
@@ -1877,6 +1870,7 @@ edu.Box.WinLogin = {
                 }
                 function eCallback() {
                     //接口异常
+                    $("#edu-win-login").button("option", "disabled", false);
                     $("#" + edu.config.winLogin.errorBoxDivID).html(edu.config.winLogin.hint.b);
                 }
                 api.apiRequest({

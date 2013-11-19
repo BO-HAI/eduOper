@@ -574,6 +574,10 @@ edu.config.BuildUrl = function (api) {
     this.getPermissionUrl = function (_path, _passport) {
         return api.createFullUrl(createObj("permission", _path, _passport));
     };
+    //用户权限（简写函数）
+    this.getUpUrl = function (_path, _passport) {
+        return api.createFullUrl(createObj("permission", _path, _passport));
+    };
     //获取公告接口URL
     this.getNoticeUrl = function (_path, _passport) {
         return api.createFullUrl(createObj("notice", _path, _passport));
@@ -581,9 +585,5 @@ edu.config.BuildUrl = function (api) {
     //获取模考接口URL
     this.getExamUrl = function (_path, _passport) {
         return api.createFullUrl(createObj("exam", _path, _passport));
-    };
-    //用户权限
-    this.getUpUrl = function (_path, _passport) {
-        return api.createFullUrl(createObj("up", _path, _passport));
     };
 };
