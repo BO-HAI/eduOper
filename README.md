@@ -5,7 +5,7 @@
 ### 引用
 ```html
 <script  src="http://static.edu24ol.com/js/Global/history/2.4.0/edu_config.js"></script>
-<script  src="http://static.edu24ol.com/js/Global/history/2.4.0/edu_oper.js"></script>
+<script  src="http://static.edu24ol.com/js/Global/history/2.4.0/edu-oper.js"></script>
 ```
 
 ### API
