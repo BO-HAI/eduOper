@@ -1,5 +1,6 @@
 ﻿/*global window:false,document:false*/
-//=====Version：2.4.0  131111=====
+//=====Version：2.4.0  131209=====
+
 var edu = edu || {};
 
 edu.config = {
@@ -205,8 +206,18 @@ edu.config = {
         },
         //模考
         exam: {
-            domain: "",
+            domain: "http://exammongodb.api.edu24ol.com",
             testDomain: "http://exammongodb.api.hq.com"
+        },
+        //作业
+        lessonwork: {
+            domain: "http://lessonwork.api.edu24ol.com",
+            testDomain: "http://lessonwork.api.hq.com"
+        },
+        //答疑
+        qa: {
+            domain: "http://ques.api.edu24ol.com",
+            testDomain: "http://ques.api.hq.com"
         }
     },
     oldTicket: "Passport",
@@ -585,5 +596,13 @@ edu.config.BuildUrl = function (api) {
     //获取模考接口URL
     this.getExamUrl = function (_path, _passport) {
         return api.createFullUrl(createObj("exam", _path, _passport));
+    };
+    //获取作业接口URL
+    this.getLessonworkUrl = function (_path, _passport) {
+        return api.createFullUrl(createObj("lessonwork", _path, _passport));
+    };
+    //答疑接口
+    this.getQAUrl = function () {
+        return api.createFullUrl(createObj("ques", _path, _passport));
     };
 };

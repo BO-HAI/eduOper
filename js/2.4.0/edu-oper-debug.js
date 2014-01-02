@@ -1,5 +1,5 @@
 ﻿/*global document:false, clearTimeout:false, location:false, setTimeout:false, unescape:false, window:false*/
-//=====Version：2.4.0  131109=====
+//=====Version：2.4.0  131030=====
 //[Date]：
 //2013-08-15 -- 2013-10-30;
 //[Contain]：
@@ -382,12 +382,6 @@ edu.command.Api.prototype = {
             if ("type" in _reqObj) {
                 if (_reqObj.type === "get" || _reqObj.type === "put" || _reqObj.type === "post" || _reqObj.type === "delete" || _reqObj.type === "easy") {
                     requestObj.type = _reqObj.type;
-                    if (_reqObj.type === "delete") {
-                        requestObj.type = "get";
-                    }
-                    if (_reqObj.type === "put") {
-                        requestObj.type = "post";
-                    }
                 }
             }
             if ("postdata" in _reqObj) {
@@ -595,7 +589,7 @@ edu.command.Api.prototype = {
             alert("api.post方法参数错误，请检查参数类型");
         }
     },
-    pub: function (myUrl, data, callback, errorCallback) {
+    put: function (myUrl, data, callback, errorCallback) {
         if (arguments.length < 3) {
             alert("api.post方法参数错误");
             return;
@@ -624,13 +618,15 @@ edu.command.Api.prototype = {
         }
         if (arguments.length === 2 && typeof arguments[0] === "string" && typeof arguments[1] === "function") {
             this.apiRequest({
-                url: myUrl
+                url: myUrl,
+                type: "get",
+                para: "m=delete"
             }, callback);
         } else if (typeof arguments[0] === "string" && typeof arguments[1] === "function" && typeof arguments[2] === "function") {
             this.apiRequest({
                 url: myUrl,
-                type: "delete",
-                param: "m=delete"
+                type: "get",
+                para: "m=delete"
             }, callback, errorCallback);
         } else {
             alert("api.get方法参数错误，请检查参数类型");
