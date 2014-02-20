@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="http://static.edu24ol.com/js/global/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="js/3.0.0/edu-oper-debug.js" type="text/javascript"></script>
+    <script src="js/2.4.0/edu_config.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var url = url = 'http://web.api.hq.com';
+
+        function demo1() {
+            var api = new edu.command.Api(true),
+                url = url + '/User',
+                postData = {},
+                loginPromies,
+                exitPromies;
+
+            //初始化信息
+            api.setReq({ redirect: '/eduOper/callback.html' });
+            postData.name = 'acacac1';
+            postData.pwd = '000000';
+
+            //登陆
+            loginPromies = api.post(url, postData);
+
+            exitPromies = loginPromies.pipe(function (data) {
+                console.info(data);
+                return api.get(url + '?passport=' + data.Passport);
+            });
+            
+            exitPromies.done(function (data) {
+                console.info(data);
+            });
+
+            exitPromies.fail(function (e) {
+                e.error(function (er) {
+                    console.info(er);
+                });
+            });
+        };
+        function demo3() {
+            var api = new edu.command.Api(true),
+                login = url + '/User',
+                userCourse = url + '/UserCourse',
+                userPersonal = url + '/UserPersonal',
+                postData = {},
+                loginPromies,
+                userInfoPromies;
+
+            //初始化信息
+            api.setReq({ redirect: '/eduOper/callback.html' });
+            postData.name = 'acacac1';
+            postData.pwd = '000000';
+
+            //登陆
+            loginPromies = api.post(login, postData);
+
+            userInfoPromies = loginPromies.pipe(function (data) {
+                userCourse = userCourse + '?passport=' + data.Passport;
+                userPersonal = userPersonal + '?passport=' + data.Passport;
+                return $.when(api.get(userCourse), api.get(userPersonal));
+            });
+
+            userInfoPromies.done(function (n, m) {
+                console.info(n[0]);//获得用户课程
+                console.info(m[0]);//获取用户头像
+            });
+        };
+
+        //反模式
+        function demo2() {
+            var api = new edu.command.Api(true),
+                url = url + '/User',
+                postData = {},
+                loginPromies,
+                exitPromies;
+
+            //初始化信息
+            api.setReq({ redirect: '/eduOper/callback.html' });
+            postData.name = 'acacac1';
+            postData.pwd = '000000';
+
+            api.post(url, postData, function (data) {
+                api.get(url, function (data) {
+                    //正常    
+                }, function (e) {
+                    //错误
+                });
+            });
+        };
+        //反模式
+        function demo4() {
+            var api = new edu.command.Api(true),
+                login = url + '/User',
+                userCourse = url + '/UserCourse',
+                userPersonal = url + '/UserPersonal',
+                postData = {};
+
+            //初始化信息
+            api.setReq({ redirect: '/eduOper/callback.html' });
+            postData.name = 'acacac1';
+            postData.pwd = '000000';
+
+            //登陆
+            api.get(login, function (result1) {
+                userCourse = userCourse + '?passport=' + result1.Passport;
+                //获取用户课程
+                api.get(userCourse, function (result2) {
+                    userPersonal = userPersonal + '?passport=' + result1.Passport;
+                    //获取用户头像
+                    api.get(userPersonal, function (result3) {
+                        //三个请求成功后的处理
+                    });
+                });
+            });
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+
+</html>
