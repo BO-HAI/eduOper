@@ -8,13 +8,41 @@
     <script src="js/2.4.0/edu_config.js" type="text/javascript"></script>
     <script type="text/javascript">
         var url = url = 'http://web.api.hq.com';
+function demo() {
+    var url = url = 'http://web.api.hq.com',
+        api = new edu.command.Api(true),
+        url = url + '/User',
+        postData = {},
+        loginPromise;
 
+    //初始化信息
+    api.setReq({ redirect: '/eduOper/callback.html' });
+    postData.name = 'acacac1';
+    postData.pwd = '000000';
+
+    //例1：返回Promise对象
+    loginPromise = api.post(url, postData);
+    loginPromise.done(function (result) {
+        console.log(result);//返回的数据
+    });
+    loginPromise.fail(function (error) {
+        //异常处理
+    });
+
+    //例2：原始写法
+    api.post(url, postData, function (result) {
+        console.log(result);
+    }, function (error) {
+        //异常处理
+    });
+};
         function demo1() {
-            var api = new edu.command.Api(true),
+            var url = url = 'http://web.api.hq.com',
+                api = new edu.command.Api(true),
                 url = url + '/User',
                 postData = {},
-                loginPromies,
-                exitPromies;
+                loginPromise,
+                exitPromise;
 
             //初始化信息
             api.setReq({ redirect: '/eduOper/callback.html' });
@@ -22,31 +50,32 @@
             postData.pwd = '000000';
 
             //登陆
-            loginPromies = api.post(url, postData);
+            loginPromise = api.post(url, postData);
 
-            exitPromies = loginPromies.pipe(function (data) {
+            exitPromise = loginPromise.pipe(function (data) {
                 console.info(data);
+                //退出
                 return api.get(url + '?passport=' + data.Passport);
             });
             
-            exitPromies.done(function (data) {
+            exitPromise.done(function (data) {
+                //退出后的正确处理
                 console.info(data);
             });
 
-            exitPromies.fail(function (e) {
-                e.error(function (er) {
-                    console.info(er);
-                });
+            exitPromise.fail(function (e) {
+                //错误处理
             });
         };
         function demo3() {
-            var api = new edu.command.Api(true),
+            var url = url = 'http://web.api.hq.com',
+                api = new edu.command.Api(true),
                 login = url + '/User',
                 userCourse = url + '/UserCourse',
                 userPersonal = url + '/UserPersonal',
                 postData = {},
-                loginPromies,
-                userInfoPromies;
+                loginPromise,
+                userInfoPromise;
 
             //初始化信息
             api.setReq({ redirect: '/eduOper/callback.html' });
@@ -54,35 +83,40 @@
             postData.pwd = '000000';
 
             //登陆
-            loginPromies = api.post(login, postData);
+            loginPromise = api.post(login, postData);
 
-            userInfoPromies = loginPromies.pipe(function (data) {
+            userInfoPromise = loginPromise.pipe(function (data) {
                 userCourse = userCourse + '?passport=' + data.Passport;
                 userPersonal = userPersonal + '?passport=' + data.Passport;
+                //获取用户头像和课程
                 return $.when(api.get(userCourse), api.get(userPersonal));
             });
 
-            userInfoPromies.done(function (n, m) {
+            //当两个请求全部正确返回后
+            userInfoPromise.done(function (n, m) {
                 console.info(n[0]);//获得用户课程
                 console.info(m[0]);//获取用户头像
+                //正常处理
             });
         };
 
         //反模式
         function demo2() {
-            var api = new edu.command.Api(true),
+            var url = url = 'http://web.api.hq.com',
+                api = new edu.command.Api(true),
                 url = url + '/User',
                 postData = {},
-                loginPromies,
-                exitPromies;
+                loginPromise,
+                exitPromise;
 
-            //初始化信息
             api.setReq({ redirect: '/eduOper/callback.html' });
             postData.name = 'acacac1';
             postData.pwd = '000000';
 
-            api.post(url, postData, function (data) {
-                api.get(url, function (data) {
+            //这里的get请求依赖于post请求
+            api.post(url, postData, function (result1) {
+                url = url + '?passport=' + result1.Passport;
+                api.get(url, function (result2) {
                     //正常    
                 }, function (e) {
                     //错误
@@ -91,7 +125,8 @@
         };
         //反模式
         function demo4() {
-            var api = new edu.command.Api(true),
+            var url = url = 'http://web.api.hq.com',
+                api = new edu.command.Api(true),
                 login = url + '/User',
                 userCourse = url + '/UserCourse',
                 userPersonal = url + '/UserPersonal',
@@ -102,7 +137,7 @@
             postData.name = 'acacac1';
             postData.pwd = '000000';
 
-            //登陆
+            //反模式，登陆
             api.get(login, function (result1) {
                 userCourse = userCourse + '?passport=' + result1.Passport;
                 //获取用户课程
@@ -115,7 +150,6 @@
                 });
             });
         };
-
     </script>
 </head>
 <body>

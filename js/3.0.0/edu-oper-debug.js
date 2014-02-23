@@ -35,7 +35,7 @@ edu.command.Api = function (debug) {
         return req;
     };
     this.setReq = function (newReq) {
-        var i, len;
+        var r, len;
         for (r in newReq) {
             if (typeof req[r] !== 'undefined') {
                 req[r] = newReq[r];
@@ -51,7 +51,7 @@ edu.command.Api.prototype.get = function (url, fn1, fn2) {
         promise = {};
 
     if (arguments.length > 0) {
-        
+        return null;
     }
 
     req.url = url;
@@ -89,7 +89,7 @@ edu.command.Api.prototype.get = function (url, fn1, fn2) {
 edu.command.Api.prototype.post = function (url, postData, fn1, fn2) {
 
 
-    var that = this,
+    var that = this, r,
         deferred = $.Deferred(),
         req = that.getReq(),
         container = $("#webApiRequestContainer"),
@@ -128,8 +128,10 @@ edu.command.Api.prototype.post = function (url, postData, fn1, fn2) {
     }
     form.attr("action", req.url + (req.url.indexOf("?") > 0 ? "&" : "?") + "r=" + req.redirect);
     form.html("");
-    for (i in req.postdata) {
-        form.append($("<input type='hidden' name='" + i + "' value='" + req.postdata[i] + "' />"));
+    for (r in req.postdata) {
+        if (req.postdata.hasOwnProperty(r)) {
+            form.append($("<input type='hidden' name='" + r + "' value='" + req.postdata[r] + "' />"));
+        }
     }
     form.submit();
 
@@ -144,11 +146,11 @@ edu.command.Api.prototype.post = function (url, postData, fn1, fn2) {
                 re = edu.config.tools.getQueryStringObj.regexp,
                 m;
 
-            while (m = re.exec(queryString)) {
+            while (m === re.exec(queryString)) {
                 result[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
             }
             return result;
-        };
+        }
 
         url = this.contentWindow.location.href;
 
