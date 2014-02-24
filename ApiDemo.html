@@ -4,38 +4,41 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
     <script src="http://static.edu24ol.com/js/global/jquery-1.9.1.min.js" type="text/javascript"></script>
-    <script src="js/3.0.0/edu-oper-debug.js" type="text/javascript"></script>
+
     <script src="js/2.4.0/edu_config.js" type="text/javascript"></script>
+    <script src="js/3.0.0/debug/tools.js" type="text/javascript"></script>
+    <script src="js/3.0.0/debug/api.js" type="text/javascript"></script>
+
     <script type="text/javascript">
         var url = url = 'http://web.api.hq.com';
-function demo() {
-    var url = url = 'http://web.api.hq.com',
-        api = new edu.command.Api(true),
-        url = url + '/User',
-        postData = {},
-        loginPromise;
+        function demo() {
+            var url = url = 'http://web.api.hq.com',
+            api = new edu.command.Api(true),
+            url = url + '/User',
+            postData = {},
+            loginPromise;
 
-    //初始化信息
-    api.setReq({ redirect: '/eduOper/callback.html' });
-    postData.name = 'acacac1';
-    postData.pwd = '000000';
+            //初始化信息
+            api.setReq({ redirect: '/eduOper/callback.html' });
+            postData.name = 'acacac1';
+            postData.pwd = '000000';
 
-    //例1：返回Promise对象
-    loginPromise = api.post(url, postData);
-    loginPromise.done(function (result) {
-        console.log(result);//返回的数据
-    });
-    loginPromise.fail(function (error) {
-        //异常处理
-    });
+            //例1：返回Promise对象
+            loginPromise = api.post(url, postData);
+            loginPromise.done(function (result) {
+                console.log(result);//返回的数据
+            });
+            loginPromise.fail(function (error) {
+                //异常处理
+            });
 
-    //例2：原始写法
-    api.post(url, postData, function (result) {
-        console.log(result);
-    }, function (error) {
-        //异常处理
-    });
-};
+            //例2：原始写法
+            api.post(url, postData, function (result) {
+                console.log(result);
+            }, function (error) {
+                //异常处理
+            });
+        };
         function demo1() {
             var url = url = 'http://web.api.hq.com',
                 api = new edu.command.Api(true),
@@ -57,7 +60,7 @@ function demo() {
                 //退出
                 return api.get(url + '?passport=' + data.Passport);
             });
-            
+        
             exitPromise.done(function (data) {
                 //退出后的正确处理
                 console.info(data);
@@ -150,6 +153,25 @@ function demo() {
                 });
             });
         };
+
+        function demo5() {
+            var api = new edu.command.Tools();
+
+            var a = api.getQueryStringObj('www.edu24ol.com?name=edu&age=26');
+            console.info(a);
+        };
+
+        function demo6() {
+            var url = url = 'http://manage.hq.com/api/AreaMapping?id=1',
+                api = new edu.command.Api(true);
+
+            var delPromise = api.del(url);
+
+            delPromise.done(function (data) {
+                console.info(data);
+            });
+        };
+
     </script>
 </head>
 <body>

@@ -1,0 +1,163 @@
+﻿var url = url = 'http://web.api.hq.com';
+
+function demo() {
+    var url = url = 'http://web.api.hq.com',
+    api = new edu.command.Api(true),
+    url = url + '/User',
+    postData = {},
+    loginPromise;
+
+    //初始化信息
+    api.setReq({ redirect: '/eduOper/callback.html' });
+    postData.name = 'acacac1';
+    postData.pwd = '000000';
+
+    //例1：返回Promise对象
+    loginPromise = api.post(url, postData);
+    loginPromise.done(function (result) {
+        console.log(result);//返回的数据
+    });
+    loginPromise.fail(function (error) {
+        //异常处理
+    });
+
+    //例2：原始写法
+    api.post(url, postData, function (result) {
+        console.log(result);
+    }, function (error) {
+        //异常处理
+    });
+};
+function demo1() {
+    var url = url = 'http://web.api.hq.com',
+        api = new edu.command.Api(true),
+        url = url + '/User',
+        postData = {},
+        loginPromise,
+        exitPromise;
+
+    //初始化信息
+    api.setReq({ redirect: '/eduOper/callback.html' });
+    postData.name = 'acacac1';
+    postData.pwd = '000000';
+
+    //登陆
+    loginPromise = api.post(url, postData);
+
+    exitPromise = loginPromise.pipe(function (data) {
+        console.info(data);
+        //退出
+        return api.get(url + '?passport=' + data.Passport);
+    });
+
+    exitPromise.done(function (data) {
+        //退出后的正确处理
+        console.info(data);
+    });
+
+    exitPromise.fail(function (e) {
+        //错误处理
+    });
+};
+function demo3() {
+    var url = url = 'http://web.api.hq.com',
+        api = new edu.command.Api(true),
+        login = url + '/User',
+        userCourse = url + '/UserCourse',
+        userPersonal = url + '/UserPersonal',
+        postData = {},
+        loginPromise,
+        userInfoPromise;
+
+    //初始化信息
+    api.setReq({ redirect: '/eduOper/callback.html' });
+    postData.name = 'acacac1';
+    postData.pwd = '000000';
+
+    //登陆
+    loginPromise = api.post(login, postData);
+
+    userInfoPromise = loginPromise.pipe(function (data) {
+        userCourse = userCourse + '?passport=' + data.Passport;
+        userPersonal = userPersonal + '?passport=' + data.Passport;
+        //获取用户头像和课程
+        return $.when(api.get(userCourse), api.get(userPersonal));
+    });
+
+    //当两个请求全部正确返回后
+    userInfoPromise.done(function (n, m) {
+        console.info(n[0]);//获得用户课程
+        console.info(m[0]);//获取用户头像
+        //正常处理
+    });
+};
+
+//反模式
+function demo2() {
+    var url = url = 'http://web.api.hq.com',
+        api = new edu.command.Api(true),
+        url = url + '/User',
+        postData = {},
+        loginPromise,
+        exitPromise;
+
+    api.setReq({ redirect: '/eduOper/callback.html' });
+    postData.name = 'acacac1';
+    postData.pwd = '000000';
+
+    //这里的get请求依赖于post请求
+    api.post(url, postData, function (result1) {
+        url = url + '?passport=' + result1.Passport;
+        api.get(url, function (result2) {
+            //正常    
+        }, function (e) {
+            //错误
+        });
+    });
+};
+//反模式
+function demo4() {
+    var url = url = 'http://web.api.hq.com',
+        api = new edu.command.Api(true),
+        login = url + '/User',
+        userCourse = url + '/UserCourse',
+        userPersonal = url + '/UserPersonal',
+        postData = {};
+
+    //初始化信息
+    api.setReq({ redirect: '/eduOper/callback.html' });
+    postData.name = 'acacac1';
+    postData.pwd = '000000';
+
+    //反模式，登陆
+    api.get(login, function (result1) {
+        userCourse = userCourse + '?passport=' + result1.Passport;
+        //获取用户课程
+        api.get(userCourse, function (result2) {
+            userPersonal = userPersonal + '?passport=' + result1.Passport;
+            //获取用户头像
+            api.get(userPersonal, function (result3) {
+                //三个请求成功后的处理
+            });
+        });
+    });
+};
+
+function demo5() {
+    var api = new edu.command.Tools();
+
+    var a = api.getQueryStringObj('www.edu24ol.com?name=edu&age=26');
+    console.info(a);
+};
+
+function demo6() {
+    var url = url = 'http://manage.hq.com/api/AreaMapping?id=1',
+        api = new edu.command.Api(true);
+
+    var delPromise = api.del(url);
+
+    delPromise.done(function (data) {
+        console.info(data);
+    });
+};
+
